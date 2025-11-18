@@ -4,12 +4,8 @@ using Scheduler.Data.Interfaces;
 
 namespace Scheduler.Data.Repositories;
 
-public class UserRepository : GenericRepository<UserEntity>, IUserRepository
+public class UserRepository(SchedulerDbContext context) : GenericRepository<UserEntity>(context), IUserRepository
 {
-	public UserRepository(SchedulerDbContext context)
-		: base(context)
-	{ }
-
 	public async Task<UserEntity?> GetByEmailAsync(string email)
 	{
 		return await Context.Users

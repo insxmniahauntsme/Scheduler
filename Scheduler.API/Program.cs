@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ using Scheduler.Data.Interfaces;
 using Scheduler.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCore();
 builder.Services.AddData(builder.Configuration.GetConnectionString("DefaultConnection")!);
@@ -51,7 +54,11 @@ builder.Services.AddAuthentication(options =>
 		};
 	});
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+	});;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

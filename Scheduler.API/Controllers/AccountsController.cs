@@ -12,8 +12,8 @@ public class AccountsController(IMediator mediator) : ControllerBase
 {
 	[HttpPost("create")]
 	public async Task<IActionResult> CreateAccount(
-		CreateAccountModel model, 
-		[FromServices] IValidator<CreateAccountModel> validator)
+		AddAccountModel model, 
+		[FromServices] IValidator<AddAccountModel> validator)
 	{
 		await validator.ValidateAndThrowAsync(model);
 
@@ -25,10 +25,8 @@ public class AccountsController(IMediator mediator) : ControllerBase
 	}
 	
 	[HttpPost("login")]
-	public async Task<IActionResult> Login(LoginModel model, [FromServices] IValidator<LoginModel> validator)
+	public async Task<IActionResult> Login(LoginModel model)
 	{
-		await validator.ValidateAndThrowAsync(model);
-		
 		var request = model.ToRequest();
 		
 		var token = await mediator.Send(request);

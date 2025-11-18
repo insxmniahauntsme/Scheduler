@@ -3,9 +3,9 @@ using Scheduler.Api.Models;
 
 namespace Scheduler.Api.Validators;
 
-public class CreateAccountRequestValidator : AbstractValidator<CreateAccountModel>
+public class AddAccountModelValidator : AbstractValidator<AddAccountModel>
 {
-	public CreateAccountRequestValidator()
+	public AddAccountModelValidator()
 	{
 		RuleFor(request => request.Email).EmailAddress();
 		RuleFor(request => request.Password).NotNull().NotEmpty();
